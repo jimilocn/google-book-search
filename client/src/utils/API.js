@@ -6,7 +6,7 @@ export default {
     return axios.get("/api/books");
   },
   getGoogleBooks: function(query) {
-    console.log("search:",query);
+    // console.log("search:",query);
     return axios.get("/api/google", { params: { q: query } });
   },
   // Gets the book with the given id

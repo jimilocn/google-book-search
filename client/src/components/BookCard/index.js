@@ -1,7 +1,7 @@
 import React from "react";
 import "./style.css";
 
-export function ListItem(props) {
+export function BookCard(props) {
     return (
 <div class="card mb-3" style="max-width: 540px;">
   <div class="row no-gutters">
@@ -10,7 +10,7 @@ export function ListItem(props) {
     </div>
     <div class="col-md-8">
       <div class="card-body">
-        <h5 class="card-title"></h5>
+        <h5 class="card-title">{props.title} by {props.authors}</h5>
         <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
         <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
       </div>
@@ -20,3 +20,5 @@ export function ListItem(props) {
 )
   }
   
+
+  export default BookCard;
