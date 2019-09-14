@@ -6,10 +6,12 @@ const router = require("express").Router();
 module.exports = {
   findAll: function (req, res) {
     const {query: params} = req;
+    console.log("find all:", params)
     axios.get("https://www.googleapis.com/books/v1/volumes", {
       params
     }).then(results => {
-      results.data.items.filter(
+      console.log(results)
+     return results.data.items.filter(
         result =>
         result.volumeInfo.title &&
         result.volumeInfo.infoLink &&
@@ -48,4 +50,4 @@ module.exports = {
 //     .catch(err => res.status(422).json(err));
 // });
 
-module.exports = router;
+// module.exports = router;

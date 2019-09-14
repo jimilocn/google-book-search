@@ -21,13 +21,17 @@ class Books extends Component {
   }
 
   loadBooks = () => {
-    // API.getGoogleBooks()
-    //   .then(res =>
-    //     this.setState({ books: res.data})
-    //   )
-    //   .catch(err => console.log(err));
-      console.log(this.state.books)
-      console.log(this.state.title)
+    API.getGoogleBooks(this.state.title)
+      .then(res =>{
+        console.log(res.data)
+        this.setState({ books: res.data})
+
+        console.log("state books:"+this.state.books)
+      }
+      )
+      .catch(err => console.log(err));
+      
+      // console.log(this.state.title)
   };
 
   deleteBook = id => {
@@ -55,9 +59,9 @@ class Books extends Component {
     //     .catch(err => console.log(err));
     // }
     if (this.state.title){
-      API.getGoogleBooks(this.state.title)
-        .then(res =>this.setState({books:res.data}))
-        .catch(err=>console.log(err))
+      // API.getGoogleBooks(this.state.title)
+      //   .then(res => this.setState({books: res.data}))
+      //   .catch(err=>console.log(err))
         this.loadBooks();
       this.setState({title: ""})
       }
@@ -92,12 +96,19 @@ class Books extends Component {
             {this.state.books.length ? (
               <List>
                 {this.state.books.map(book => (
-                  <ListItem key={book._id}>
-                    <Link to={"/google/" + book._id}>
+                  <ListItem 
+                  key={book._id} 
+                  thumbnail={book.volumeInfo.imageLinks.thumbnail} 
+                  info={book.volumeInfo.description}
+                  >
+                    <Link to={"/books/" + book._id}>
                       <strong>
-                        {book.title} by {book.author}
+                        {book.volumeInfo.title} by {book.volumeInfo.authors}
+                        
                       </strong>
                     </Link>
+                    {/* <img src={book.volumeInfo.imageLink.thumbnail}/> */}
+                    {/* {thumbnail=book.volumeInfo.imageLink.thumbnail} */}
                     <DeleteBtn onClick={() => this.deleteBook(book._id)} />
                    </ListItem>
                 ))}
