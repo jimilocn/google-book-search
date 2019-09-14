@@ -21,11 +21,11 @@ class Books extends Component {
   }
 
   loadBooks = () => {
-    API.getGoogleBooks()
-      .then(res =>
-        this.setState({ books: res.data, title: "", author: "", synopsis: "" })
-      )
-      .catch(err => console.log(err));
+    // API.getGoogleBooks()
+    //   .then(res =>
+    //     this.setState({ books: res.data})
+    //   )
+    //   .catch(err => console.log(err));
       console.log(this.state.books)
       console.log(this.state.title)
   };
@@ -55,11 +55,10 @@ class Books extends Component {
     //     .catch(err => console.log(err));
     // }
     if (this.state.title){
-      API.getGoogleBooks({
-        title: this.state.title})
+      API.getGoogleBooks(this.state.title)
         .then(res =>this.setState({books:res.data}))
         .catch(err=>console.log(err))
-      this.loadBooks();  
+        this.loadBooks();
       this.setState({title: ""})
       }
     }
@@ -93,14 +92,14 @@ class Books extends Component {
             {this.state.books.length ? (
               <List>
                 {this.state.books.map(book => (
-                  // <ListItem key={book._id}>
-                  //   <Link to={"/google/" + book._id}>
+                  <ListItem key={book._id}>
+                    <Link to={"/google/" + book._id}>
                       <strong>
-                        {book.volumeInfo.title} by {book.volumeInfo.author}
+                        {book.title} by {book.author}
                       </strong>
-                  //   </Link>
-                  //   <DeleteBtn onClick={() => this.deleteBook(book._id)} />
-                  // </ListItem>
+                    </Link>
+                    <DeleteBtn onClick={() => this.deleteBook(book._id)} />
+                   </ListItem>
                 ))}
               </List>
             ) : (

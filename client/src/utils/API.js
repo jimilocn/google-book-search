@@ -5,8 +5,9 @@ export default {
   getBooks: function() {
     return axios.get("/api/books");
   },
-  getGoogleBooks: function(q) {
-    return axios.get("/api/google", { params: { q: q } });
+  getGoogleBooks: function(query) {
+    console.log(query);
+    return axios.get("/api/google", { params: { q: "title:" + query } });
   },
   // Gets the book with the given id
   getSavedBooks: function() {
