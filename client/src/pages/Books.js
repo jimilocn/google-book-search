@@ -182,7 +182,7 @@ class Books extends Component {
                 ))}
               </List>
             ) : (
-              <h3>No Results to Display</h3>
+              <h3>No Search Results to Display</h3>
             )}
             </form>
            
@@ -193,7 +193,8 @@ class Books extends Component {
             <Jumbotron>
               <h1 class="header-font">Books On My List</h1>
             </Jumbotron>
-          
+            {this.state.books.length ? (
+              <List>
             {this.state.saved.map(saved => (
               <ListItem key={saved._id}>
                 <Link to={"/books/" + saved._id}>
@@ -204,7 +205,9 @@ class Books extends Component {
                 <DeleteBtn onClick={() => this.deleteBook(saved._id)} />
               </ListItem>
             ))}
-           
+           </List> 
+            ):(<h3>This area should be displaying Saved books. . Need to continue to fix the bugs</h3>
+              )}
             
           </Col>
         </Row>
