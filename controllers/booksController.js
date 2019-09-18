@@ -18,8 +18,8 @@ module.exports = {
   create: function(req, res) {
     db.Book
       .create(req.body)
-      .then(dbModel => res.json(dbModel))
-      .catch(err => res.status(422).json(err));
+      .then(dbModel => {res.json(dbModel), console.log("THIS IS WORKING", req.body)})
+      .catch(err => {res.status(422).json(err),console.log("THIS IS NOT WORKING")});
   },
   update: function(req, res) {
     db.Book

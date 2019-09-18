@@ -23,29 +23,19 @@ class Books extends Component {
 
   componentDidMount() {
     this.loadSavedBooks();
-    console.log(this.state.saved)
+    console.log("saved books",this.state.saved)
   }
 
   loadSavedBooks = () => {
-    // API.getBooks()
-    //   .then(res => {
-    //     console.log("saved books",res.data);
-    //     this.setState({
-    //       saved: res.data
-    //     });
-    //   })
-    //   .catch(err => console.log(err));
-    console.log("saved books", this.state.saved);
-    console.log("STATE ID", this.state.id)
+
   }
 
   loadBooks = () => {
     API.getGoogleBooks(this.state.title)
       .then(res =>{
-  
         this.setState({ books: res.data})
         console.log("searched books", res.data)
-
+        console.log("search: ",this.state.title)
         // console.log("state books:"+this.state.books)
       }
       )
@@ -69,41 +59,40 @@ class Books extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
-    // if (this.state.title && this.state.author) {
-    //   API.saveBook({
-    //     title: this.state.title,
-    //     author: this.state.author,
-    //     synopsis: this.state.synopsis
-    //   })
-    //     .then(res => this.loadBooks())
-    //     .catch(err => console.log(err));
-    // }
+   
+    console.log(this.state.title, "search the title")
     if (this.state.title){
-      // API.getGoogleBooks(this.state.title)
-      //   .then(res => this.setState({books: res.data}))
-      //   .catch(err=>console.log(err))
-        this.loadBooks();
+    
+      this.loadBooks();
       this.setState({title: ""})
       }
     }
 
-    handleSaveSubmit = event => {
-      event.preventDefault();
-      // if (this.state.title && this.state.author) {
-      //   API.saveBook({
-      //     title: this.state.title,
-      //     author: this.state.author,
-      //     synopsis: this.state.synopsis
-      //   })
-      //     .then(res => this.loadBooks())
-      //     .catch(err => console.log(err));
-      // }
+    handleSaveSubmit = (e, id) => {
+      e.preventDefault();
+
+      const book = this.state.books.find(book => book.id===id)
+        console.log(book,"this is the state id for the book")
+        console.log('click')
+      API.saveBook ({
+        id: book.id,
+        thumbnail:book.volumeInfo.imageLinks.thumbnail,
+        info:book.volumeInfo.description,
+        title:book.volumeInfo.title,
+        authors:book.volumeInfo.authors
+      }).then(res => this.setState({saved: res.data}))
+      console.log("HOLY MOLY", this.state.saved)
+
+
+      // event.preventDefault();
+    //  this.setState({id: books.id})
+
   if(this.state.id){
         // API.getGoogleBooks(this.state.title)
         //   .then(res => this.setState({books: res.data}))
         //   .catch(err=>console.log(err))
         console.log(this.state.id)
-          this.loadSaveBooks();
+        this.loadSaveBooks();
         this.setState({title: ""})
     }}
       
@@ -150,7 +139,7 @@ class Books extends Component {
               {this.state.books.length ? (
               <List>
                 {this.state.books.map(book => (
-                  console.log("BOOK ID",book.id),
+                  // console.log("BOOK ID",book.id),
 
                   <ListItem 
                   key={book._id} 
@@ -170,10 +159,7 @@ class Books extends Component {
 
                     <DeleteBtn onClick={() => this.deleteBook(book.id)} />
                     <FormBtn 
-
-                      onChange={()=>{
-                        this.setState({id: book.id})}
-                      }>
+                     onClick={(e) => this.handleSaveSubmit(e, book.id)}>
                       save book
                     </FormBtn>
            
